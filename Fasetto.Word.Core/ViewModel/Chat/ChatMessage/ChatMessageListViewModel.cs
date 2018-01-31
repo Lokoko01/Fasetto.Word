@@ -104,19 +104,16 @@ namespace Fasetto.Word.Core
             if (Items == null)
                 Items = new ObservableCollection<ChatMessageListItemViewModel>();
 
-            if (!string.IsNullOrWhiteSpace(PendingMessageText))
+            // Fake send a new message
+            Items.Add(new ChatMessageListItemViewModel
             {
-                // Fake send a new message
-                Items.Add(new ChatMessageListItemViewModel
-                {
-                    Initials = "LM",
-                    Message = PendingMessageText,
-                    MessageSentTime = DateTime.UtcNow,
-                    SentByMe = true,
-                    SenderName = "Luke Malpass",
-                    NewItem = true
-                });
-            }
+                Initials = "LM",
+                Message = PendingMessageText,
+                MessageSentTime = DateTime.UtcNow,
+                SentByMe = true,
+                SenderName = "Luke Malpass",
+                NewItem = true
+            });
 
             // Clear the pending message text
             PendingMessageText = string.Empty;
