@@ -1,4 +1,6 @@
 ﻿using Fasetto.Word.Core;
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -24,7 +26,7 @@ namespace Fasetto.Word
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        private Thickness mOuterMarginSize = new Thickness(5);
+        private int mOuterMarginSize = 10;
 
         /// <summary>
         /// The radius of the edges of the window
@@ -63,10 +65,7 @@ namespace Fasetto.Word
         /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public Thickness ResizeBorderThickness => new Thickness(OuterMarginSize.Left + ResizeBorder, 
-                                                                OuterMarginSize.Top + ResizeBorder,
-                                                                OuterMarginSize.Right + ResizeBorder,
-                                                                OuterMarginSize.Bottom + ResizeBorder);
+        public Thickness ResizeBorderThickness => new Thickness(ResizeBorder + OuterMarginSize);
 
         /// <summary>
         /// The padding of the inner content of the main window
@@ -76,12 +75,17 @@ namespace Fasetto.Word
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        public Thickness OuterMarginSize
+        public int OuterMarginSize
         {
             // If it is maximized or docked, no border
-            get => mWindow.WindowState == WindowState.Maximized ? mWindowResizer.CurrentMonitorMargin : (Borderless ? new Thickness(0) : mOuterMarginSize);
+            get => Borderless ? 0 : mOuterMarginSize;
             set => mOuterMarginSize = value;
         }
+
+        /// <summary>
+        /// The margin around the window to allow for a drop shadow
+        /// </summary>
+        public Thickness OuterMarginSizeThickness => new Thickness(OuterMarginSize);
 
         /// <summary>
         /// The radius of the edges of the window
@@ -94,15 +98,10 @@ namespace Fasetto.Word
         }
 
         /// <summary>
-        /// The rectangle border around the window when docked
-        /// </summary>
-        public int FlatBorderThickness => Borderless && mWindow.WindowState != WindowState.Maximized ? 1 : 0;
-
-        /// <summary>
         /// The radius of the edges of the window
         /// </summary>
         public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
-        
+
         /// <summary>
         /// The height of the title bar / caption of the window
         /// </summary>
@@ -117,7 +116,7 @@ namespace Fasetto.Word
         /// such as when a popup is visible or the window is not focused
         /// </summary>
         public bool DimmableOverlayVisible { get; set; }
-        
+
         #endregion
 
         #region Commands
@@ -178,16 +177,6 @@ namespace Fasetto.Word
                 // Fire off resize events
                 WindowResized();
             };
-
-            // Fix dropping an undocked window at top which should be positioned at the
-            // very top of screen
-            mWindowResizer.WindowFinishedMove += () =>
-            {
-                // Check for moved to top of window and not at an edge
-                if (mDockPosition == WindowDockPosition.Undocked && mWindow.Top == mWindowResizer.CurrentScreenSize.Top)
-                    // If so, move it to the true top (the border size)
-                    mWindow.Top = -OuterMarginSize.Top;
-            };
         }
 
         #endregion
@@ -200,7 +189,11 @@ namespace Fasetto.Word
         /// <returns></returns>
         private Point GetMousePosition()
         {
-            return mWindowResizer.GetCursorPosition();
+            // Position of the mouse relative to the window
+            var position = Mouse.GetPosition(mWindow);
+
+            // Add the window position so its a "ToScreen"
+            return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
         }
 
         /// <summary>
@@ -211,9 +204,9 @@ namespace Fasetto.Word
         {
             // Fire off events for all properties that are affected by a resize
             OnPropertyChanged(nameof(Borderless));
-            OnPropertyChanged(nameof(FlatBorderThickness));
             OnPropertyChanged(nameof(ResizeBorderThickness));
             OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
             OnPropertyChanged(nameof(WindowRadius));
             OnPropertyChanged(nameof(WindowCornerRadius));
         }
