@@ -1,2 +1,0 @@
-# Fasseto.Word
-Tuto WPF
