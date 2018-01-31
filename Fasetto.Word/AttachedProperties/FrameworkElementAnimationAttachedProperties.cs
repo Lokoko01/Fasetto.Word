@@ -87,6 +87,28 @@ namespace Fasetto.Word
         protected virtual void DoAnimation(FrameworkElement element, bool value, bool firstLoad) { }
     }
 
+    public class FadeInImageOnLoadProperty : AnimateBaseProperty<FadeInImageOnLoadProperty>
+    {
+        public override void OnValueUpdated(DependencyObject sender, object value)
+        {
+            // Make sure we have an image
+            if (!(sender is Image image))
+                return;
+
+            // If we want to animate in...
+            if ((bool)value)
+                image.TargetUpdated += Image_TargetUpdated;
+            else
+                image.TargetUpdated -= Image_TargetUpdated;
+        }
+
+        private async void Image_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            // Fade in Image
+            await (sender as Image).FadeInAsync(false);
+        }
+    }
+
     /// <summary>
     /// Animates a framework element sliding it in from the left on show
     /// and sliding out to the left on hide
