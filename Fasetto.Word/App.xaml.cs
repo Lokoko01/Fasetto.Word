@@ -1,10 +1,4 @@
 ﻿using Fasetto.Word.Core;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Fasetto.Word
@@ -26,6 +20,9 @@ namespace Fasetto.Word
             // Setup the main application 
             ApplicationSetup();
 
+            // Log it
+            IoC.Logger.Log("Application starting...", LogLevel.Debug);
+
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
@@ -41,6 +38,9 @@ namespace Fasetto.Word
 
             // Bind a UI Manager
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
+
+            // Bind a logger
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
         }
     }
 }

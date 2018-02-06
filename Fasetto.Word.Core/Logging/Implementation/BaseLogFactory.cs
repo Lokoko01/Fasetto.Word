@@ -106,7 +106,7 @@ namespace Fasetto.Word.Core
         /// <param name="lineNumber">The line of code in the filename this message was logged from</param>
         public void Log(
             string message,
-            LogLevel level = LogLevel.Informative, 
+            LogLevel level = LogLevel.Informative,
             [CallerMemberName] string origin = "",
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0)

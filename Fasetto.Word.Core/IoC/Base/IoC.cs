@@ -1,5 +1,4 @@
 ﻿using Ninject;
-using System;
 
 namespace Fasetto.Word.Core
 {
@@ -19,6 +18,11 @@ namespace Fasetto.Word.Core
         /// A shortcut to access the <see cref="IUIManager"/>
         /// </summary>
         public static IUIManager UI => IoC.Get<IUIManager>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="ILogFactory"/>
+        /// </summary>
+        public static ILogFactory Logger => IoC.Get<ILogFactory>();
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationViewModel"/>
