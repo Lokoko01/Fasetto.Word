@@ -54,7 +54,11 @@ namespace Fasetto.Word.Core
         /// <param name="origin">The method/function this message was logged in</param>
         /// <param name="filePath">The code filename that this message was logged from</param>
         /// <param name="lineNumber">The line of code in the filename this message was logged from</param>
-        void Log(string message, LogLevel level = LogLevel.Informative, [CallerMemberName]string origin = "", [CallerFilePath]string filePath = "", [CallerLineNumber]int lineNumber = 0);
+        void Log(string message,
+            LogLevel level = LogLevel.Informative,
+            [CallerMemberName]string origin = "",
+            [CallerFilePath]string filePath = "",
+            [CallerLineNumber]int lineNumber = 0);
 
         #endregion
     }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,7 +33,7 @@ namespace Fasetto.Word
             // Get the framework element
             if (!(sender is FrameworkElement element))
                 return;
-            
+
             // Don't fire if the value doesn't change
             if ((bool)sender.GetValue(ValueProperty) == (bool)value && mAlreadyLoaded.ContainsKey(sender))
                 return;
@@ -224,7 +222,7 @@ namespace Fasetto.Word
                 await element.FadeOutAsync(firstLoad ? 0 : 0.3f);
         }
     }
-    
+
     /// <summary>
     /// Animates a framework element sliding it from right to left and repeating forever
     /// </summary>

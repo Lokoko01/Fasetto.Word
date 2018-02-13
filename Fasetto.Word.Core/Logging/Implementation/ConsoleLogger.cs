@@ -25,7 +25,7 @@ namespace Fasetto.Word.Core
             {
                 // Debug is blue
                 case LogLevel.Debug:
-                    consoleColor = ConsoleColor.Blue;
+                    consoleColor = ConsoleColor.Cyan;
                     break;
                 // Verbose is gray
                 case LogLevel.Verbose:

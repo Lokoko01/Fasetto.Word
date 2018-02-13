@@ -29,27 +29,27 @@ namespace Fasetto.Word.Core
             {
                 // Debug
                 case LogLevel.Debug:
-                    category = "information";
+                    category = "Information";
                     break;
 
                 // Verbose
                 case LogLevel.Verbose:
-                    category = "verbose";
+                    category = "Verbose";
                     break;
 
                 // Warning
                 case LogLevel.Warning:
-                    category = "warning";
+                    category = "Warning";
                     break;
 
                 // Error
                 case LogLevel.Error:
-                    category = "error";
+                    category = "Error";
                     break;
 
                 // Success
                 case LogLevel.Success:
-                    category = "-----";
+                    category = "Success";
                     break;
             }
 
